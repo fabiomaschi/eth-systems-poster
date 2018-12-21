@@ -11,6 +11,7 @@
 %
 % ChangeLog:
 %
+% 1.08 - page dimensions according to www.papersizes.io
 % 1.07 - bugfixed custom size handling, portrait or landscape settings are ignored now
 % 1.06 - added the type1cm package for scalable math fonts
 % 1.05 - added version check for xkeyval package
@@ -36,44 +37,28 @@
 
 \DeclareOptionX{size}[a0]{
   \typeout{beamerposter: checking size input, please wait.}
-  \XKV@cc*+[\val\nr]{#1}{a0b,a0,a1,a2,a3,a4,custom}{%
+  \XKV@cc*+[\val\nr]{#1}{a0,a1,a2,a3,a4,custom}{%
     \typeout{beamerposter: the input \val\ \nr\ was correct, we proceed.}
     \ifcase\nr\relax
-    %a0b
-    \setlength{\paperwidth}{119cm}
-    \setlength{\paperheight}{88cm}
-    \setlength{\textwidth}{116cm}
-    \setlength{\textheight}{88cm}
-    \or
     %a0
-    \setlength{\paperwidth}{118.82cm}
-    \setlength{\paperheight}{83.96cm}
-    \setlength{\textwidth}{117.82cm}
-    \setlength{\textheight}{82.96cm}
+    \setlength{\paperwidth}{1189mm}
+    \setlength{\paperheight}{841mm}
     \or
     %a1
-    \setlength{\paperwidth}{83.96cm}
-    \setlength{\paperheight}{59.4cm}
-    \setlength{\textwidth}{82.96cm}
-    \setlength{\textheight}{58.4cm}
+    \setlength{\paperwidth}{841mm}
+    \setlength{\paperheight}{594mm}
     \or
     %a2
-    \setlength{\paperwidth}{59.4cm}
-    \setlength{\paperheight}{41.98cm}
-    \setlength{\textwidth}{58.4cm}
-    \setlength{\textheight}{40.98cm}
+    \setlength{\paperwidth}{594mm}
+    \setlength{\paperheight}{420mm}
     \or
     %a3
-    \setlength{\paperwidth}{41.98cm}
-    \setlength{\paperheight}{29.7cm}
-    \setlength{\textwidth}{40.98cm}
-    \setlength{\textheight}{28.7cm}
+    \setlength{\paperwidth}{420mm}
+    \setlength{\paperheight}{297mm}
     \or
     %a4
-    \setlength{\paperwidth}{29.7cm}
-    \setlength{\paperheight}{21.0cm}
-    \setlength{\textwidth}{28.7cm}
-    \setlength{\textheight}{20.0cm}
+    \setlength{\paperwidth}{297mm}
+    \setlength{\paperheight}{210mm}
     \or
     \customsizetrue
     \fi    
@@ -132,12 +117,6 @@
   \setlength{\textwidth}{\resulttextwidth cm}
   \setlength{\textheight}{\resulttextheight cm}
 \fi
-
-%% Setting proper dimensions for a DIN A0 printer
-\setlength{\headheight}{0 cm}
-\setlength{\headsep}{0 cm}
-\setlength{\topmargin}{-12.7 mm}     % -1in +1.47cm
-\setlength{\oddsidemargin}{-25.4 mm} % -1in +0.4cm
 
 %% For the page layout
 \ifdebug

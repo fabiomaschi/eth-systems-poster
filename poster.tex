@@ -5,174 +5,594 @@
 % http://www.nathanieljohnston.com/2009/08/latex-poster-template/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%----------------------------------------------------------------------------------------
+%  PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
 \documentclass[final]{beamer}
-\usepackage[scale=1.24]{beamerposter}
-\usepackage{graphicx}			% allows us to import images
+\usepackage[scale=1.2, size=a0, orientation=portrait, ]{beamerposter}
+\usepackage{graphicx}                 % allows us to import images
+\usepackage{booktabs}                 % top and bottom rules for tables
+\usepackage{exscale}
+\usepackage{calc}
+\usetheme{confposter}
+
+\graphicspath{ {graphics/} }
+
+
 
 %-----------------------------------------------------------
-% Define the column width and poster size
+% Define the column widths and overall poster size
 % To set effective sepwid, onecolwid and twocolwid values, first choose how many columns you want and how much separation you want between columns
-% The separation I chose is 0.024 and I want 4 columns
-% Then set onecolwid to be (1-(4+1)*0.024)/4 = 0.22
-% Set twocolwid to be 2*onecolwid + sepwid = 0.464
+% In this template, the separation width chosen is 0.024 of the paper width and a 4-column layout
+% onecolwid should therefore be (1-(# of columns+1)*sepwid)/# of columns e.g. (1-(4+1)*0.024)/4 = 0.22
+% Set twocolwid to be (2*onecolwid)+sepwid = 0.464
+% Set threecolwid to be (3*onecolwid)+2*sepwid = 0.708
 %-----------------------------------------------------------
+\def\ncol{2} % number of columns in the poster
 
 \newlength{\sepwid}
 \newlength{\onecolwid}
 \newlength{\twocolwid}
 \newlength{\threecolwid}
-\setlength{\paperwidth}{48in}
-\setlength{\paperheight}{36in}
-\setlength{\sepwid}{0.024\paperwidth}
-\setlength{\onecolwid}{0.22\paperwidth}
-\setlength{\twocolwid}{0.464\paperwidth}
-\setlength{\threecolwid}{0.708\paperwidth}
-\setlength{\topmargin}{-0.5in}
-\usetheme{confposter}
-\usepackage{exscale}
+\setlength{\sepwid}{0.024\textwidth} % Separation width (white space) between columns
+  \ifcase\ncol
+  \setlength{\onecolwid}{0.952\textwidth}  % Width of one column in a one column total   
+  \or
+  \setlength{\onecolwid}{0.952\textwidth}  % Width of one column in a one column total   
+  \or
+  \setlength{\onecolwid}{0.464\textwidth}  % Width of one column in a two column total
+  \or
+  \setlength{\onecolwid}{0.3013\textwidth} % Width of one column in a three column total
+  \or
+  \setlength{\onecolwid}{0.22\textwidth}   % Width of one column in a four column total
+  \fi
+\setlength{\twocolwid}{2\onecolwid + \sepwid} % Width of two columns
+\setlength{\threecolwid}{3\onecolwid + 2\sepwid} % Width of three columns
 
-%-----------------------------------------------------------
-% The next part fixes a problem with figure numbering. Thanks Nishan!
-% When including a figure in your poster, be sure that the commands are typed in the following order:
-% \begin{figure}
-% \includegraphics[...]{...}
-% \caption{...}
-% \end{figure}
-% That is, put the \caption after the \includegraphics
-%-----------------------------------------------------------
+%\usepackage{times}     % times font
+\usepackage{palatino}  % Palatino font
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
 
-\usecaptiontemplate{
-\small
-\structure{\insertcaptionname~\insertcaptionnumber:}
-\insertcaption}
+%\setbeamerfont{block body}{family=\sfdefault}
 
-%-----------------------------------------------------------
-% Define colours (see beamerthemeconfposter.sty to change these colour definitions)
-%-----------------------------------------------------------
+\setbeamercolor{background canvas}{bg=eth4}
+\setbeamercolor{headline title}{fg=eth1}
+\setbeamercolor{headline author}{fg=black}
+\setbeamercolor{headline}{bg=white}
 
-\setbeamercolor{block title}{fg=ngreen,bg=white}
-\setbeamercolor{block body}{fg=black,bg=white}
-\setbeamercolor{block alerted title}{fg=white,bg=dblue!70}
-\setbeamercolor{block alerted body}{fg=black,bg=dblue!10}
+\setbeamercolor{block title}{fg=white,bg=eth4} % Colors of the block titles
+\setbeamercolor{block body}{fg=black,bg=white} % Colors of the body of blocks
+\setbeamercolor{block alerted title}{fg=white,bg=eth1!70} % Colors of the highlighted block titles
+\setbeamercolor{block alerted body}{fg=black,bg=eth1!10} % Colors of the body of highlighted blocks
+% Many more colors are available for use in beamerthemeconfposter.sty
 
-%-----------------------------------------------------------
-% Name and authors of poster/paper/research
-%-----------------------------------------------------------
+%----------------------------------------------------------------------------------------
+% TITLE SECTION 
+%----------------------------------------------------------------------------------------
 
-\title{This Was Made in \LaTeX}
-\author{Your Name}
-\institute{Department and University Name}
+\title{Unnecessarily Complicated Title} % Poster title
 
-%-----------------------------------------------------------
-% Start the poster itself
-%-----------------------------------------------------------
+\author{Fabio Maschi} % Author(s)
+
+\institute{Systems Group, Department of Computer Science, ETH Zurich} % Institution(s)
+
+%----------------------------------------------------------------------------------------
 
 \begin{document}
-\begin{frame}[t]
-  \begin{columns}[t]												% the [t] option aligns the column's content at the top
-    \begin{column}{\sepwid}\end{column}			% empty spacer column
-    \begin{column}{\onecolwid}
-      \begin{block}{Requirements of the Template}
-        In order for your poster to compile properly, up-to-date versions of the following packages are required:
-        \vskip1ex
-        \begin{itemize}
-          \item latexbeamer
-          \item pgf (Tikz)
-          \item beamerposter
-        \end{itemize}
-        \vskip1ex
-        All of those packages are contained in both the MikTeX and the TexLive distribution of LaTeX.
-      \end{block}
-      \vskip2ex
-      \begin{block}{A Standard Block}
-        The standard block environment looks like this. It has justified text and a green title with an underline. You can create one like so:
-        \begin{semiverbatim}
-          {\color{red}\\begin}\{{\color{blue}block}\}\{Title\}\newline
-          \hskip1ex.......\newline
-          {\color{red}\\end}\{{\color{blue}block}\}
-        \end{semiverbatim}
-      \end{block}
-      \vskip2ex
-      \begin{alertblock}{An ``Alert'' Block}
-        The ``alert'' block environment looks like this. It also has justified text, but it has a border and a light background to make it stand out. You can create one like so:
-        \begin{semiverbatim}
-          {\color{red}\\begin}\{{\color{blue}alertblock}\}\{Title\}\newline
-          \hskip1ex.......\newline
-          {\color{red}\\end}\{{\color{blue}alertblock}\}
-        \end{semiverbatim}
-      \end{alertblock}
-    \end{column}
 
-    \begin{column}{\sepwid}\end{column}			% empty spacer column
-    \begin{column}{\threecolwid}					  % create a three-column-wide column and then we will split it up later
-      \begin{block}{Altering Column Spans}
-        You can make columns that span multiple other columns relatively easily. Lengths are defined in the template that make columns look normal-ish if you want to use a four-column layout like this poster. If you want to use a different number of columns, you will have to modify those lengths accordingly at the top of the poster.tex file.
-        
-        In particular, near the top of the TeX file you will see lines that look like:
-        \begin{semiverbatim}
-          \hskip1ex\\setlength\{\\sepwid\}\{0.024\\paperwidth\}
-          
-          \hskip1ex\\setlength\{\\onecolwid\}\{0.22\\paperwidth\}
-          
-          \hskip1ex\\setlength\{\\twocolwid\}\{0.464\\paperwidth\}
-          
-          \hskip1ex\\setlength\{\\threecolwid\}\{0.708\\paperwidth\}
-        \end{semiverbatim}
-        
-        Set ``sepwid'' to be some small length somewhere near 0.025 (this is the space between columns). Then if $n$ is the number of columns you want, you should set
-        \begin{align*}
-          \text{onecolwid} & = \frac{1}{n}(1-(n+1)\times\text{sepwid}), \\
-          \text{twocolwid} & = 2\times\text{onecolwid} + \text{sepwid}, \\
-          \text{threecolwid} & = 3\times\text{onecolwid} + 2\times\text{sepwid}.
-        \end{align*}
-      \end{block}
-      \begin{columns}[t,totalwidth=\threecolwid]	% split up that three-column-wide column
-        \begin{column}{\onecolwid}
-          \setbeamercolor{block title}{fg=red,bg=white}%frame color
-          \setbeamercolor{block body}{fg=black,bg=white}%body color
-          \begin{block}{Block Colours}
-            For the standard blocks there are two colours; one for the title and one for the block body:\\
-            \begin{semiverbatim}
-              {\color{red}\\setbeamercolor}\{block title\}\newline \{fg=red,bg=white\}
-            \end{semiverbatim}
-            \begin{semiverbatim}
-              {\color{red}\\setbeamercolor}\{block  body\}\newline \{fg=black,bg=white\}
-            \end{semiverbatim}
-            The \emph{fg} colour sets the text colour and \emph{bg} sets the background colour.
-            For the normal blocks it makes no sense to use a background colour other than white. You \emph{can} change it, but it will look weird!
-          \end{block}
-        \end{column}
-        \begin{column}{\onecolwid}
-          \setbeamercolor{block alerted title}{fg=black,bg=norange}	% frame color
-          \setbeamercolor{block alerted body}{fg=black,bg=white}		% body color
-          \begin{alertblock}{Alert Block Colours}
-            You can similarly modify the colours for alert blocks (but try not to overdo it):\\
-            \begin{semiverbatim}
-              {\color{red}\\setbeamercolor}\{block title\}\newline \{fg=black,bg=norange\}
-            \end{semiverbatim}
-            \begin{semiverbatim}
-              {\color{red}\\setbeamercolor}\{block  body\}\newline \{fg=black,bg=white\}
-            \end{semiverbatim}
-          \end{alertblock}        
-        \end{column}
-        \begin{column}{\onecolwid}
-          \begin{block}{References}
-            Some references and a graphic to show you how it's done:
-            
-		        \small{\begin{thebibliography}{99}
-		        \bibitem{KLPL06} D.~W. Kribs, R. Laflamme, D. Poulin, M. Lesosky, Quantum Inf. \& Comp. \textbf{6} (2006), 383-399.
-		        \bibitem{zanardi97} P. Zanardi, M. Rasetti, Phys. Rev. Lett. \textbf{79},  3306 (1997).
-		        \end{thebibliography}}
-			      \vspace{0.75in}
-			      \begin{center}
-			        \includegraphics[width=5in]{canada.jpg}
-			      \end{center}
-		      \end{block}
-        \end{column}
-      \end{columns}
-      \vskip2.5ex
-    \end{column}
-  \begin{column}{\sepwid}\end{column}			% empty spacer column
- \end{columns}
-\end{frame}
+
+\begin{frame}[t] % The whole poster is enclosed in one beamer frame
+
+\begin{columns}[t] % The whole poster consists of three major columns
+
+
+
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+
+\begin{column}{\onecolwid} % The first column
+
+%----------------------------------------------------------------------------------------
+% INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Introduction}
+
+Lorem ipsum dolor \textbf{sit amet}, consectetur adipiscing elit. Sed commodo molestie porta. Sed ultrices scelerisque sapien ac commodo. Donec ut volutpat elit. Sed laoreet accumsan mattis. Integer sapien tellus, auctor ac blandit eget, sollicitudin vitae lorem. Praesent dictum tempor pulvinar. Suspendisse potenti. Sed tincidunt varius ipsum, et porta nulla suscipit et. Etiam congue bibendum felis, ac dictum augue cursus a. \textbf{Donec} magna eros, iaculis sit amet placerat quis, laoreet id est. In ut orci purus, interdum ornare nibh. Pellentesque pulvinar, nibh ac malesuada accumsan, urna nunc convallis tortor, ac vehicula nulla tellus eget nulla. Nullam lectus tortor, \textit{consequat tempor hendrerit} quis, vestibulum in diam. Maecenas sed diam augue.
+
+\end{block}
+
+%  %----------------------------------------------------------------------------------------
+%  % OBJECTIVES
+%  %----------------------------------------------------------------------------------------
+%  
+%  \begin{alertblock}{Objectives}
+%  
+%  Lorem ipsum dolor sit amet, consectetur, nunc tellus pulvinar tortor, commodo eleifend risus arcu sed odio:
+%  \begin{itemize}
+%  \item Mollis dignissim, magna augue tincidunt dolor, interdum vestibulum urna
+%  \item Sed aliquet luctus lectus, eget aliquet leo ullamcorper consequat. Vivamus eros sem, iaculis ut euismod non, sollicitudin vel orci.
+%  \item Nascetur ridiculus mus.  
+%  \item Euismod non erat. Nam ultricies pellentesque nunc, ultrices volutpat nisl ultrices a.
+%  \end{itemize}
+%  
+%  \end{alertblock}
+
+%----------------------------------------------------------------------------------------
+% MATERIALS
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Materials}
+
+The following materials were required to complete the research:
+
+\begin{itemize}
+\item Curabitur pellentesque dignissim
+\item Eu facilisis est tempus quis
+\item Duis porta consequat lorem
+\item Eu facilisis est tempus quis
+\end{itemize}
+
+The materials were prepared according to the steps outlined below:
+
+\begin{enumerate}
+\item Curabitur pellentesque dignissim
+\item Eu facilisis est tempus quis
+\item Duis porta consequat lorem
+\item Curabitur pellentesque dignissim
+\end{enumerate}
+
+\end{block}
+
+
+%----------------------------------------------------------------------------------------
+% MATHEMATICAL SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Mathematical Section}
+
+Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin. Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin.
+  %  
+\begin{equation}
+E = mc^{2}
+\label{eqn:Einstein}
+\end{equation}
+
+Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin. Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin.
+
+\begin{equation}
+\cos^3 \theta =\frac{1}{4}\cos\theta+\frac{3}{4}\cos 3\theta
+\label{eq:refname}
+\end{equation}
+
+Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin. Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin.
+
+\begin{equation}
+\kappa =\frac{\xi}{E_{\mathrm{max}}} %\mathbb{ZNR}
+\end{equation}
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the second column
+
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+
+\begin{column}{\onecolwid} % The third column
+
+
+%----------------------------------------------------------------------------------------
+% RESULTS
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Results}
+
+Nunc tempus venenatis facilisis. Curabitur suscipit consequat eros non porttitor. Sed a massa dolor, id ornare enim:
+
+\begin{table}
+\vspace{2ex}
+\begin{tabular}{l l l}
+\toprule
+\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+\midrule
+Treatment 1 & 0.0003262 & 0.562 \\
+Treatment 2 & 0.0015681 & 0.910 \\
+Treatment 3 & 0.0009271 & 0.296 \\
+\bottomrule
+\end{tabular}
+\caption{Table caption}
+\end{table}
+
+\end{block}
+
+
+%----------------------------------------------------------------------------------------
+% CONCLUSION
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Conclusion}
+
+Nunc tempus venenatis facilisis. \textbf{Curabitur suscipit} consequat eros non porttitor. Sed a massa dolor, id ornare enim. Fusce quis massa dictum tortor \textbf{tincidunt mattis}. Donec quam est, lobortis quis pretium at, laoreet scelerisque lacus. Nam quis odio enim, in molestie libero. Vivamus cursus mi at \textit{nulla elementum sollicitudin}.
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+% ADDITIONAL INFORMATION
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Additional Information}
+
+Maecenas ultricies feugiat velit non mattis. Fusce tempus arcu id ligula varius dictum. 
+\begin{itemize}
+\item Curabitur pellentesque dignissim
+\item Eu facilisis est tempus quis
+\item Duis porta consequat lorem
+\end{itemize}
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+% REFERENCES
+%----------------------------------------------------------------------------------------
+
+\begin{block}{References}
+
+%\nocite{*} % Insert publications even if they are not cited in the poster
+\small{\bibliographystyle{unsrt}
+\bibliography{sample}\vspace{0.75in}}
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+% CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\setbeamercolor{block alerted title}{fg=black,bg=eth6} % Change the alert block title colors
+\setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
+
+\begin{alertblock}{Contact Information}
+
+\begin{itemize}
+\item Web: \href{http://www.university.edu/smithlab}{http://www.university.edu/smithlab}
+\item Email: \href{mailto:john@smith.com}{john@smith.com}
+\item Phone: +1 (000) 111 1111
+\end{itemize}
+
+\end{alertblock}
+
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the third column
+
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\end{columns} % End of all the columns in the poster
+
+% \begin{columns}
+% \begin{column}{\twocolwid}
+% \begin{block}{Partners}
+% 
+% \end{block}
+% \end{column}
+% \end{columns}
+
+\end{frame} % End of the enclosing frame
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\documentclass[a0,20pt]{a0poster}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}               % images
+\graphicspath{ {graphics/} }
+
+
+
+
+
+%\RequirePackage[top=4cm, bottom=4cm, left=2cm, right=2cm]{geometry}     % doc margin
+
+
+\usepackage{multicol} % This is so we can have multiple columns of text side-by-side
+\columnsep=100pt % This is the amount of white space between the columns in the poster
+\columnseprule=0pt % This is the thickness of the black line between the columns in the poster
+
+%\usepackage[svgnames]{xcolor} % Specify colors by their 'svgnames', for a full list of all colors available see here: http://www.latextemplates.com/svgnames-colors
+
+\usepackage{todonotes}              % todo
+
+%\usepackage{times}     % times font
+\usepackage{palatino}  % Palatino font
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+
+
+\usepackage{booktabs} % Top and bottom rules for table
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
+\usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
+\usepackage{wrapfig} % Allows wrapping text around tables and figures
+
+\definecolor{ku}{RGB}{144,26,30}
+\definecolor{ku-yellow}{RGB}{255,249,25}
+
+
+
+
+
+
+\renewcommand*{\title}{NFA-based Business Rule Engines implementation on FPGA}
+%\newcommand*{\subtitle}{Blabla}
+\newcommand*{\mainauthor}{Fabio Maschi}
+\newcommand*{\others}{, Muhsen Owaida, Gustavo Alonso}
+\newcommand*{\department}{Systems Group, Department of Computer Science, ETH Zurich}
+
+\renewcommand*{\maketitle}{\
+%\fcolorbox{red}{gray}{%
+\begin{minipage}[t]{0.15\textwidth-2\fboxrule-2\fboxsep\relax}
+\includegraphics[trim={20pt 20pt 20pt 20pt},clip,height=120px]{eth_logo_kurz_pos.eps}
+\end{minipage}%}
+%
+%\fcolorbox{red}{gray}{%
+\begin{minipage}[c]{0.69\textwidth-2\fboxrule-2\fboxsep\relax}
+\centering
+\Huge {\color{eth1} \textbf{\title}}\\[1cm] % Title
+%\huge\textit{\subtitle}\\[1cm] % Subtitle
+\Large \textbf{\mainauthor}\others\\[0.5cm] % Author(s)
+\Large \department\\[0.4cm] % University/organization
+\end{minipage}%}
+%
+%\fcolorbox{red}{gray}{%
+\begin{minipage}[t]{0.15\textwidth-2\fboxrule-2\fboxsep\relax}
+\flushright
+\includegraphics[height=120px]{systemslogo-3colour-notext.eps}
+\end{minipage}%}
+\vspace{3cm} % A bit of extra whitespace between the header and poster content
+}
+
+
+\begin{document}
+
+
+
+ 
+%----------------------------------------------------------------------------------------
+%  POSTER HEADER 
+%----------------------------------------------------------------------------------------
+
+\noindent\maketitle
+
+%----------------------------------------------------------------------------------------
+
+\large
+\begin{multicols}{3}
+
+%----------------------------------------------------------------------------------------
+%  ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\color{eth2} % Navy color for the abstract
+
+\begin{abstract}
+
+Sed fringilla tempus hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam ut elit sit amet metus lobortis consequat sit amet in libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel sem magna. Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing. Quisque vestibulum eros eu. Phasellus imperdiet, tortor vitae congue bibendum, felis enim sagittis lorem, et volutpat ante orci sagittis mi. Morbi rutrum laoreet semper. Morbi accumsan enim nec tortor consectetur non commodo nisi sollicitudin. Proin sollicitudin. Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh.
+
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%  INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\color{eth1} % SaddleBrown color for the introduction
+
+\section*{Introduction}
+
+Aliquam non lacus dolor, \textit{a aliquam quam} \cite{Smith:2012qr}. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla in nibh mauris. Donec vel ligula nisi, a lacinia arcu. Sed mi dui, malesuada vel consectetur et, egestas porta nisi. Sed eleifend pharetra dolor, et dapibus est vulputate eu. \textbf{Integer faucibus elementum felis vitae fringilla.} In hac habitasse platea dictumst. Duis tristique rutrum nisl, nec vulputate elit porta ut. Donec sodales sollicitudin turpis sed convallis. Etiam mauris ligula, blandit adipiscing condimentum eu, dapibus pellentesque risus.
+
+\textit{Aliquam auctor}, metus id ultrices porta, risus enim cursus sapien, quis iaculis sapien tortor sed odio. Mauris ante orci, euismod vitae tincidunt eu, porta ut neque. Aenean sapien est, viverra vel
+
+%----------------------------------------------------------------------------------------
+%  OBJECTIVES
+%----------------------------------------------------------------------------------------
+
+
+\section*{Main Objectives}
+
+\begin{enumerate}
+\item Lorem ipsum dolor sit amet, consectetur.
+\item Nullam at mi nisl. Vestibulum est purus, ultricies cursus volutpat sit amet, vestibulum eu.
+\item Praesent tortor libero, vulputate quis elementum a, iaculis.
+\item Phasellus a quam mauris, non varius mauris. Fusce tristique, enim tempor varius porta, elit purus commodo velit, pretium mattis ligula nisl nec ante.
+\item Ut adipiscing accumsan sapien, sit amet pretium.
+\end{enumerate}
+
+%----------------------------------------------------------------------------------------
+%  MATERIALS AND METHODS
+%----------------------------------------------------------------------------------------
+
+\section*{Materials and Methods}
+
+Fusce magna risus, molestie ut porttitor in, consectetur sed mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque consectetur blandit pellentesque. Sed odio justo, viverra nec porttitor vel, lacinia a nunc. Suspendisse pulvinar euismod arcu, sit amet accumsan enim fermentum quis. In id mauris ut dui feugiat egestas. Vestibulum ac turpis lacinia nisl commodo sagittis eget sit amet sapien.
+
+%------------------------------------------------
+
+\subsection*{Mathematical Section}
+
+Nulla vel nisl sed mauris auctor mollis non sed. 
+
+\begin{equation}
+E = mc^{2}
+\label{eqn:Einstein}
+\end{equation}
+
+Curabitur mi sem, pulvinar quis aliquam rutrum. (1) edf (2)
+, $\Omega=[-1,1]^3$, maecenas leo est, ornare at. $z=-1$ edf $z=1$ sed interdum felis dapibus sem. $x$ set $y$ ytruem. 
+Turpis $j$ amet accumsan enim $y$-lacina; 
+ref $k$-viverra nec porttitor $x$-lacina. 
+
+Vestibulum ac diam a odio tempus congue. Vivamus id enim nisi:
+
+\begin{eqnarray}
+\cos\bar{\phi}_k Q_{j,k+1,t} + Q_{j,k+1,x}+\frac{\sin^2\bar{\phi}_k}{T\cos\bar{\phi}_k} Q_{j,k+1} &=&\nonumber\\ 
+-\cos\phi_k Q_{j,k,t} + Q_{j,k,x}-\frac{\sin^2\phi_k}{T\cos\phi_k} Q_{j,k}\label{edgek}
+\end{eqnarray}
+and
+\begin{eqnarray}
+\cos\bar{\phi}_j Q_{j+1,k,t} + Q_{j+1,k,y}+\frac{\sin^2\bar{\phi}_j}{T\cos\bar{\phi}_j} Q_{j+1,k}&=&\nonumber \\
+-\cos\phi_j Q_{j,k,t} + Q_{j,k,y}-\frac{\sin^2\phi_j}{T\cos\phi_j} Q_{j,k}.\label{edgej}
+\end{eqnarray} 
+
+Nulla sed arcu arcu. Duis et ante gravida orci venenatis tincidunt. Fusce vitae lacinia metus. Pellentesque habitant morbi. $\mathbf{A}\underline{\xi}=\underline{\beta}$ Vim $\underline{\xi}$ enum nidi $3(P+2)^{2}$ lacina. Id feugain $\mathbf{A}$ nun quis; magno.
+
+%----------------------------------------------------------------------------------------
+%  RESULTS 
+%----------------------------------------------------------------------------------------
+
+\section*{Results}
+
+Donec faucibus purus at tortor egestas eu fermentum dolor facilisis. Maecenas tempor dui eu neque fringilla rutrum. Mauris \emph{lobortis} nisl accumsan. Aenean vitae risus ante.
+%
+\begin{wraptable}{l}{15cm} % Left or right alignment is specified in the first bracket, the width of the table is in the second
+\begin{tabular}{l l l}
+\toprule
+\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+\midrule
+Treatment 1 & 0.0003262 & 0.562 \\
+Treatment 2 & 0.0015671 & 0.910 \\
+Treatment 3 & 0.0009271 & 0.296 \\
+\bottomrule
+\end{tabular}
+\captionof{table}{\color{eth2} Table caption}
+\end{wraptable}
+%
+Phasellus imperdiet, tortor vitae congue bibendum, felis enim sagittis lorem, et volutpat ante orci sagittis mi. Morbi rutrum laoreet semper. Morbi accumsan enim nec tortor consectetur non commodo nisi sollicitudin. Proin sollicitudin. Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh.
+
+Nulla ut porttitor enim. Suspendisse venenatis dui eget eros gravida tempor. Mauris feugiat elit et augue placerat ultrices. Morbi accumsan enim nec tortor consectetur non commodo. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing. Quisque vestibulum eros eu. Phasellus imperdiet, tortor vitae congue bibendum, felis enim sagittis lorem, et 
+
+\begin{center}\vspace{1cm}
+\missingfigure[figwidth=0.8\linewidth]{placeholder}
+\captionof{figure}{\color{eth2} Figure caption}
+\end{center}\vspace{1cm}
+
+In hac habitasse platea dictumst. Etiam placerat, risus ac.
+
+Adipiscing lectus in magna blandit:
+
+\begin{center}\vspace{1cm}
+\begin{tabular}{l l l l}
+\toprule
+\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2} \\
+\midrule
+Treatment 1 & 0.0003262 & 0.562 \\
+Treatment 2 & 0.0015681 & 0.910 \\
+Treatment 3 & 0.0009271 & 0.296 \\
+\bottomrule
+\end{tabular}
+\captionof{table}{\color{eth2} Table caption}
+\end{center}\vspace{1cm}
+
+Vivamus sed nibh ac metus tristique tristique a vitae ante. Sed lobortis mi ut arcu fringilla et adipiscing ligula rutrum. Aenean turpis velit, placerat eget tincidunt nec, ornare in nisl. In placerat.
+
+\begin{center}\vspace{1cm}
+\missingfigure[figwidth=0.8\linewidth]{placeholder}
+\captionof{figure}{\color{eth2} Figure caption}
+\end{center}\vspace{1cm}
+
+%----------------------------------------------------------------------------------------
+%  CONCLUSIONS
+%----------------------------------------------------------------------------------------
+
+\color{eth7}
+
+\section*{Conclusion}
+
+\begin{itemize}
+\item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
+\item Vestibulum sem ante, hendrerit a gravida ac, blandit quis magna.
+\item Donec sem metus, facilisis at condimentum eget, vehicula ut massa. Morbi consequat, diam sed convallis tincidunt, arcu nunc.
+\item Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing.
+\end{itemize}
+
+\color{eth6}
+
+%----------------------------------------------------------------------------------------
+%  FORTHCOMING RESEARCH
+%----------------------------------------------------------------------------------------
+
+\section*{Forthcoming Research}
+
+Vivamus molestie, risus tempor vehicula mattis, libero arcu volutpat purus, sed blandit sem nibh eget turpis. Maecenas rutrum dui blandit lorem vulputate gravida. Praesent venenatis mi vel lorem tempor at varius diam sagittis. Nam eu leo id turpis interdum luctus a sed augue. Nam tellus.
+
+ %----------------------------------------------------------------------------------------
+%  REFERENCES
+%----------------------------------------------------------------------------------------
+
+%\nocite{*} % Print all references regardless of whether they were cited in the poster or not
+\bibliographystyle{plain} % Plain referencing style
+\bibliography{sample} % Use the example bibliography file sample.bib
+
+%----------------------------------------------------------------------------------------
+%  ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+\section*{Acknowledgements}
+
+Etiam fermentum, arcu ut gravida fringilla, dolor arcu laoreet justo, ut imperdiet urna arcu a arcu. Donec nec ante a dui tempus consectetur. Cras nisi turpis, dapibus sit amet mattis sed, laoreet.
+
+%----------------------------------------------------------------------------------------
+
+\end{multicols}
 \end{document}
